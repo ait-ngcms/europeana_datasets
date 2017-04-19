@@ -42,6 +42,7 @@
 			<version>${version.junit}</version>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<!-- configure source and output locations -->
@@ -72,6 +73,18 @@
 					<source>${version.java}</source>
 					<target>${version.java}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
