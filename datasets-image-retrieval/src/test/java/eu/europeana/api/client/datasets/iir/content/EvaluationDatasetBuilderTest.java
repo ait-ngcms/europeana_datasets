@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,6 +27,7 @@ import eu.europeana.api.client.model.search.CommonMetadata;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
 import eu.europeana.api.client.search.query.Api2QueryInterface;
 import eu.europeana.api.client.thumbnails.ThumbnailsForCollectionAccessorTest;
+import eu.europeana.api.client.util.StringUrlProcessor;
 
 /**
  * 
@@ -98,7 +100,7 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 		 */
 		// performDatasetAggregation();
 
-//		generateImageIndexerInputFile();
+		generateImageIndexerInputFile();
 	}
 
 	// @Test
@@ -414,12 +416,12 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 				line.append(imageFile.getAbsolutePath()).append(csvSeparator);
 				// id
 				line.append(id).append(csvSeparator);
-				// thumbnail Url
-				line.append(idAndThumbnailUrl.getValue()).append(csvSeparator);
-
 				// title
 				title = getTitleFromObjectPreview(id);
-				line.append(title).append("\n");
+				line.append(title).append(csvSeparator);
+				// thumbnail Url
+				line.append(idAndThumbnailUrl.getValue()).append("\n");
+
 				writer.write(line.toString());
 				
 				// include only top(limit) items
@@ -450,7 +452,7 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 		String json = FileUtils.readFileToString(jsonFile);
 		EuropeanaApi2Item res = gson.fromJson(json, EuropeanaApi2Item.class);
 		if (res != null && res.getTitle() != null && !res.getTitle().isEmpty())
-			return res.getTitle().get(0);
+			return  StringUtils.join(res.getTitle(), ", ");
 
 		// else
 		return null;
