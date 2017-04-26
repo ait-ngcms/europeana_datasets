@@ -13,7 +13,7 @@
 
 	<groupId>eu.europeana.client.api.datasets</groupId>
 	<artifactId>datasets</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>${version.datasets}</version>
 	<packaging>pom</packaging>
 	<name>Parent for dataset modules </name>
 
