@@ -389,7 +389,7 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 		Map<String, String> idAndThumbnailUrlMap = readThumbnailsMap(thumbnailsCsvFile);
 		File outFile = getDatasetOutFile("image_indexer_in");
 
-		int limit = 100;
+		int limit = -1;
 		int counter = 0;
 
 		String datasetImageFolder = getConfig().getImageFolder(getDataset());
@@ -418,6 +418,7 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 				line.append(id).append(csvSeparator);
 				// title
 				title = getTitleFromObjectPreview(id);
+				title = cvsEscape(title);
 				line.append(title).append(csvSeparator);
 				// thumbnail Url
 				line.append(idAndThumbnailUrl.getValue()).append("\n");
@@ -438,6 +439,12 @@ public class EvaluationDatasetBuilderTest extends ThumbnailsForCollectionAccesso
 			writer.close();
 		}
 
+	}
+
+	private String cvsEscape(String title) {
+		String ret = title.replaceAll("\n", " ");
+		ret = ret.replaceAll(";", ",");
+		return ret;
 	}
 
 	private String getTitleFromObjectPreview(String id) throws IOException {
